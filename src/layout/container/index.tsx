@@ -9,7 +9,7 @@ const Container: React.FC<ContainerProps> = ({
 }): JSX.Element => {
   return (
     <div
-      className={`bg-slate-100 max-h-screen h-screen overflow-auto w-[80%] p-3 pt-[100px] ${className}`}
+      className={`bg-white max-h-screen h-screen overflow-auto w-[80%] p-3 pt-[60px] ${className}`}
     >
       {children}
     </div>
