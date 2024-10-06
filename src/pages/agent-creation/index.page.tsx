@@ -5,7 +5,7 @@ import { IoCheckmark, IoClose, IoRemove } from "react-icons/io5";
 import StepperSection from "./sections/stepper.section";
 import ChooseServiceSection from "./sections/choose-service.section";
 import ModifyContentSection from "./sections/modify-content.section";
-import AgentRolePromptSection from "./sections/agent-role-prompt.section";
+import AgentRolePromptSection from "./sections/agent-role-prompt/index.section";
 
 const AgentCreationPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -47,7 +47,7 @@ const AgentCreationPage = () => {
         <div className="col-span-5">
           {activeStep === 0 && <ChooseServiceSection />}
           {activeStep === 1 && <ModifyContentSection />}
-          {activeStep === 3 && <AgentRolePromptSection />}
+          {activeStep === 2 && <AgentRolePromptSection />}
         </div>
       </div>
     </form>

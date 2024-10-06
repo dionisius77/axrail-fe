@@ -60,7 +60,6 @@ const Sidebar: React.FC<SidebarProps> = ({ active, toggleSidebar }): JSX.Element
                   }}
                 >
                   {({ isActive }) => {
-                    console.log(item.name, isActive)
                     return (
                       <li className={`${isActive && item.path !== "#" ? "!bg-blue-50" : "bg-white"} hover:bg-spix hover:bg-opacity-20 transition-all duration-100 p-4 cursor-pointer ml-2 rounded-lg flex flex-row gap-4 items-center`}>
                         {item.icon}{item.name}
