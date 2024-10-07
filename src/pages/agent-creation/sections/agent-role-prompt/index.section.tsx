@@ -1,11 +1,18 @@
 import ContentContainer from "components/container";
-import { Card, Dropdown, Tabs, Textarea } from "react-daisyui";
-import { IoInformationCircleOutline } from "react-icons/io5";
+import { Button, Card, Dropdown, Tabs, Textarea } from "react-daisyui";
+import { IoInformationCircleOutline, IoRemove } from "react-icons/io5";
 import AgentRoleTabsSection from "./tabs.section";
 import { useState } from "react";
+import CInput from "components/input";
+import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
+import WelcomeMessageSection from "./welcome-message.section";
+import RecordNotFoundMessageSection from "./record-not-found.section";
+import FaqEnquiriesSection from "./faq-enquiries.section";
+import ProductEnquiriesSection from "./product-enquiries.section";
 
 const AgentRolePromptSection = () => {
   const [activeTab, setActiveTab] = useState(0);
+
   return (
     <>
       <ContentContainer>
@@ -28,9 +35,15 @@ const AgentRolePromptSection = () => {
           <Textarea size="lg" className="rounded-lg bg-white p-2" />
         </div>
       </ContentContainer>
+
       <div className="my-6">
         <AgentRoleTabsSection activeTab={activeTab} setActiveTab={(tab) => setActiveTab(tab)} />
       </div>
+
+      {activeTab === 0 && <WelcomeMessageSection />}
+      {activeTab === 1 && <RecordNotFoundMessageSection />}
+      {activeTab === 2 && <FaqEnquiriesSection />}
+      {activeTab === 3 && <ProductEnquiriesSection />}
     </>
   )
 }
