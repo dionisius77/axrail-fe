@@ -31,7 +31,7 @@ const AgentRolePromptSection = ({ register, errors, control, watch, reset, setVa
         </div>
         <div className="mt-4 flex flex-col gap-1">
           <label className="text-gray-500 font-semibold text-sm">PROMPT *</label>
-          <Textarea size="lg" className="rounded-lg bg-white p-2" {...register("prompt")} />
+          <Textarea autoFocus size="lg" className="rounded-lg bg-white p-2" {...register("prompt")} />
         </div>
       </ContentContainer>
 

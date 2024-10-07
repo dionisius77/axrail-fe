@@ -8,7 +8,7 @@ interface StepProps {
 }
 
 const StepperSection = ({ onStepChange, activeStep }: StepProps) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   return (
     <div className="w-full border border-gray-200 rounded-xl">
       <div className="flex flex-row justify-between items-center px-2.5 py-3 bg-gray-100 rounded-t-xl">
