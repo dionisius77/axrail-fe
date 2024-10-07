@@ -1,16 +1,15 @@
 import ContentContainer from "components/container";
-import { Button, Card, Dropdown, Tabs, Textarea } from "react-daisyui";
-import { IoInformationCircleOutline, IoRemove } from "react-icons/io5";
+import { Card, Dropdown, Textarea } from "react-daisyui";
+import { IoInformationCircleOutline } from "react-icons/io5";
 import AgentRoleTabsSection from "./tabs.section";
 import { useState } from "react";
-import CInput from "components/input";
-import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import WelcomeMessageSection from "./welcome-message.section";
 import RecordNotFoundMessageSection from "./record-not-found.section";
 import FaqEnquiriesSection from "./faq-enquiries.section";
 import ProductEnquiriesSection from "./product-enquiries.section";
+import { AgentCreationFormControlI } from "hooks/useAgentCreation";
 
-const AgentRolePromptSection = () => {
+const AgentRolePromptSection = ({ register, errors, control, watch, reset }: AgentCreationFormControlI) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -32,7 +31,7 @@ const AgentRolePromptSection = () => {
         </div>
         <div className="mt-4 flex flex-col gap-1">
           <label className="text-gray-500 font-semibold text-sm">PROMPT *</label>
-          <Textarea size="lg" className="rounded-lg bg-white p-2" />
+          <Textarea size="lg" className="rounded-lg bg-white p-2" {...register("prompt")} />
         </div>
       </ContentContainer>
 
@@ -40,7 +39,15 @@ const AgentRolePromptSection = () => {
         <AgentRoleTabsSection activeTab={activeTab} setActiveTab={(tab) => setActiveTab(tab)} />
       </div>
 
-      {activeTab === 0 && <WelcomeMessageSection />}
+      {activeTab === 0 &&
+        <WelcomeMessageSection
+          register={register}
+          errors={errors}
+          control={control}
+          watch={watch}
+          reset={reset}
+        />
+      }
       {activeTab === 1 && <RecordNotFoundMessageSection />}
       {activeTab === 2 && <FaqEnquiriesSection />}
       {activeTab === 3 && <ProductEnquiriesSection />}

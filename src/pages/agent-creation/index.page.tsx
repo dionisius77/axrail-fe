@@ -6,14 +6,14 @@ import StepperSection from "./sections/stepper.section";
 import ChooseServiceSection from "./sections/choose-service.section";
 import ModifyContentSection from "./sections/modify-content.section";
 import AgentRolePromptSection from "./sections/agent-role-prompt/index.section";
+import useAgentCreation from "hooks/useAgentCreation";
 
 const AgentCreationPage = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  }
+  const { register, errors, control, watch, reset, handleSave } = useAgentCreation();
+
   return (
-    <form onSubmit={handleSubmit} className="px-8">
+    <form onSubmit={handleSave} className="px-8">
       <Breadcrumbs className="text-lg">
         <Breadcrumbs.Item className="text-gray-500" href="#">Bot Agents</Breadcrumbs.Item>
         <Breadcrumbs.Item className="text-gray-500" href="#">Agents</Breadcrumbs.Item>
@@ -47,7 +47,15 @@ const AgentCreationPage = () => {
         <div className="col-span-5">
           {activeStep === 0 && <ChooseServiceSection />}
           {activeStep === 1 && <ModifyContentSection />}
-          {activeStep === 2 && <AgentRolePromptSection />}
+          {activeStep === 2 &&
+            <AgentRolePromptSection
+              register={register}
+              errors={errors}
+              control={control}
+              watch={watch}
+              reset={reset}
+            />
+          }
         </div>
       </div>
     </form>

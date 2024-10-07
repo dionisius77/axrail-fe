@@ -3,16 +3,22 @@ import CInput from "components/input"
 import DropdownIndicator from "components/select/dropdown-indicator.component"
 import Menu from "components/select/menu.component"
 import OptionComponent from "components/select/option.component"
+import { PromptCategoryOption } from "data/prompt-category"
+import { AgentCreationFormControlI, defaultPrompt } from "hooks/useAgentCreation"
 import { useState } from "react"
 import { Textarea, Dropdown, Card, Button, Select } from "react-daisyui"
+import { Controller, useFieldArray } from "react-hook-form"
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa"
 import { IoAdd, IoInformationCircleOutline } from "react-icons/io5"
 import ReactSelect from "react-select";
 
-const WelcomeMessageSection = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [showGuidedPrompt, setShowGuidedPrompt] = useState(false);
+const WelcomeMessageSection = ({ register, errors, control, watch, reset }: AgentCreationFormControlI) => {
+  const [showGuidedPrompt, setShowGuidedPrompt] = useState(true);
   const [platformType, setPlatformType] = useState(0);
+  const { fields, remove, append, update } = useFieldArray({
+    control,
+    name: "guidedPrompts",
+  });
 
   return (
     <ContentContainer>
@@ -24,7 +30,7 @@ const WelcomeMessageSection = () => {
         <hr className="" />
         <div className="flex flex-col gap-1">
           <label className="text-gray-500 font-semibold text-sm">BRAND NAME</label>
-          <CInput placeholder="Ex. Axrail" />
+          <CInput {...register("brandName")} placeholder="Ex. Axrail" />
         </div>
         <div className="flex flex-col gap-1">
           <label className="text-gray-500 font-semibold text-sm">UPLOAD LOGO</label>
@@ -32,15 +38,15 @@ const WelcomeMessageSection = () => {
         </div>
         <div className="mt-4 flex flex-col gap-1">
           <label className="text-gray-500 font-semibold text-sm">WELCOME MESSAGE *</label>
-          <Textarea size="lg" className="rounded-lg bg-white p-2" placeholder="Ex. Exchange your experience with the UEM Sunrise Assistant Bot, your 24/7 guide for all property-related information and support." />
+          <Textarea {...register("welcomeMessage")} size="lg" className="rounded-lg bg-white p-2" placeholder="Ex. Exchange your experience with the UEM Sunrise Assistant Bot, your 24/7 guide for all property-related information and support." />
         </div>
         <div className="flex flex-row gap-4">
           <div className="flex flex-row gap-2">
-            <input id="buttonRegister" type="checkbox" />
+            <input id="buttonRegister" type="checkbox" {...register("hasRegisterButton")} />
             <label className="cursor-pointer" htmlFor="buttonRegister">Button Register</label>
           </div>
           <div className="flex flex-row gap-2">
-            <input id="buttonLogin" type="checkbox" />
+            <input id="buttonLogin" type="checkbox" {...register("hasLoginButton")} />
             <label className="cursor-pointer" htmlFor="buttonLogin">Button Login</label>
           </div>
         </div>
@@ -50,10 +56,11 @@ const WelcomeMessageSection = () => {
             size="lg"
             className="rounded-lg bg-white p-2"
             placeholder="Ex. Alternatively, I can help with property-related inquiries or connect yout to a sales rep if you need further assistance. You can get started by selecting one of the following topics that best describes your need."
+            {...register("alternativeMessage")}
           />
         </div>
         <div className="flex flex-row gap-2 items-start">
-          <input id="guidedPrompt" type="checkbox" className="mt-2" />
+          <input id="guidedPrompt" type="checkbox" className="mt-2" {...register("guidedPromptActive")} />
           <label className="cursor-pointer" htmlFor="guidedPrompt">
             <p className="text-lg">Guided Prompt</p>
             <p className="text-gray-500 text-sm">This feature provides a list of sample prompts on the end user's conversation start screen</p>
@@ -106,128 +113,103 @@ const WelcomeMessageSection = () => {
                   WhatsApp
                 </button>
               </div>
-              <ContentContainer>
-                <div className="flex flex-row justify-between">
-                  <h4 className="text-lg font-medium">Guided Prompt 1</h4>
-                  <Button variant="outline" className="bg-white rounded-xl border-gray-300">
-                    <FaTrashAlt />
-                  </Button>
-                </div>
-                <div className="flex flex-row gap-4 my-2">
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="categoryRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="categoryRadio">Category</label>
-                  </div>
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="qnaRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="qnaRadio">Question & Answer</label>
-                  </div>
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="faqRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="faqRadio">Dynamic FAQ</label>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-gray-500 font-semibold text-sm">CATEGORY</label>
-                  <div className="bg-white border-gray-200 flex flex-row justify-between items-center p-4 rounded-lg">
-                    <p>FAQ Enquiries</p>
-                    <FaMinus />
-                  </div>
-                  <div className="bg-white p-4 h-60 shadow-xl rounded-lg">
-                    <ReactSelect
-                      placeholder="Search Category"
-                      isMulti={true}
-                      hideSelectedOptions={false}
-                      menuIsOpen={true}
-                      maxMenuHeight={180}
-                      options={[
-                        { value: "faq-enquiries", label: "FAQ Enquiries" },
-                        { value: "product-enquiries", label: "Product Enquiries" },
-                        { value: "buy-selling", label: "Buy and Selling" },
-                        { value: "renting-leasing", label: "Renting and Leasing" },
-                      ]}
-                      components={{ DropdownIndicator, Option: OptionComponent, Menu }}
-                    />
-                  </div>
-                </div>
-              </ContentContainer>
 
-              <ContentContainer>
-                <div className="flex flex-row justify-between">
-                  <h4 className="text-lg font-medium">Guided Prompt 2</h4>
-                  <Button variant="outline" className="bg-white rounded-xl border-gray-300">
-                    <FaTrashAlt />
-                  </Button>
-                </div>
-                <div className="flex flex-row gap-4 my-2">
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="categoryRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="categoryRadio">Category</label>
-                  </div>
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="qnaRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="qnaRadio">Question & Answer</label>
-                  </div>
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="faqRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="faqRadio">Dynamic FAQ</label>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-gray-500 font-semibold text-sm">QUESTION</label>
-                  <Select className="rounded-lg bg-white">
-                    <Select.Option>What steps should I take to buy a property</Select.Option>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-1 mt-2">
-                  <label className="text-gray-400 font-semibold text-xs">ANSWER</label>
-                  <Textarea
-                    size="lg"
-                    disabled
-                    className="rounded-lg bg-white p-2 disabled:text-gray-400 text-sm"
-                    value="Ex. Alternatively, I can help with property-related inquiries or connect yout to a sales rep if you need further assistance. You can get started by selecting one of the following topics that best describes your need."
-                  />
-                </div>
-              </ContentContainer>
-
-              <ContentContainer>
-                <div className="flex flex-row justify-between">
-                  <h4 className="text-lg font-medium">Guided Prompt 3</h4>
-                  <Button variant="outline" className="bg-white rounded-xl border-gray-300">
-                    <FaTrashAlt />
-                  </Button>
-                </div>
-                <div className="flex flex-row gap-4 my-2">
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="categoryRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="categoryRadio">Category</label>
-                  </div>
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="qnaRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="qnaRadio">Question & Answer</label>
-                  </div>
-                  <div className="flex flex-row gap-2">
-                    <input name="guide-type" id="faqRadio" type="radio" />
-                    <label className="cursor-pointer font-medium" htmlFor="faqRadio">Dynamic FAQ</label>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1 mt-2">
-                  <label className="text-gray-400 font-semibold text-xs">DYNAMIC FAQ</label>
-                  <Textarea
-                    size="lg"
-                    disabled
-                    className="rounded-lg bg-white p-2 disabled:text-gray-400 text-sm"
-                    value="FAQ will be provided by system"
-                  />
-                </div>
-              </ContentContainer>
-
+              {fields.map((item, i) => {
+                const currentType = watch(`guidedPrompts.${i}.type`);
+                return (
+                  <ContentContainer key={i.toString()}>
+                    <div className="flex flex-row justify-between">
+                      <h4 className="text-lg font-medium">Guided Prompt {i + 1}</h4>
+                      <Button variant="outline" className="bg-white rounded-xl border-gray-300" onClick={() => remove(i)}>
+                        <FaTrashAlt />
+                      </Button>
+                    </div>
+                    <div className="flex flex-row gap-4 my-2">
+                      <div className="flex flex-row gap-2">
+                        <input value="category" {...register(`guidedPrompts.${i}.type`)} id={`categoryRadio${i}`} type="radio" />
+                        <label className="cursor-pointer font-medium" htmlFor={`categoryRadio${i}`}>Category</label>
+                      </div>
+                      <div className="flex flex-row gap-2">
+                        <input value="qna" {...register(`guidedPrompts.${i}.type`)} id={`qnaRadio${i}`} type="radio" />
+                        <label className="cursor-pointer font-medium" htmlFor={`qnaRadio${i}`}>Question & Answer</label>
+                      </div>
+                      <div className="flex flex-row gap-2">
+                        <input value="dynamic" {...register(`guidedPrompts.${i}.type`)} id={`faqRadio${i}`} type="radio" />
+                        <label className="cursor-pointer font-medium" htmlFor={`faqRadio${i}`}>Dynamic FAQ</label>
+                      </div>
+                    </div>
+                    {currentType === "category" &&
+                      <div className="flex flex-col gap-1">
+                        <label className="text-gray-500 font-semibold text-sm">CATEGORY</label>
+                        <div className="bg-white border-gray-200 flex flex-row justify-between items-center p-4 rounded-lg">
+                          <p>FAQ Enquiries</p>
+                          <FaMinus />
+                        </div>
+                        <div className="bg-white p-4 h-60 shadow-xl rounded-lg">
+                          <Controller name={`guidedPrompts.${i}.content.categories`} control={control} render={({ field: { value, onChange } }) => {
+                            return (
+                              <ReactSelect
+                                placeholder="Search Category"
+                                isMulti={true}
+                                hideSelectedOptions={false}
+                                menuIsOpen={true}
+                                maxMenuHeight={180}
+                                value={PromptCategoryOption.filter(item => value.includes(item.value))}
+                                onChange={(e: any) => {
+                                  onChange(e.map((item: { value: string; label: string }) => item.value));
+                                }}
+                                options={PromptCategoryOption}
+                                components={{ DropdownIndicator, Option: OptionComponent, Menu }}
+                              />
+                            )
+                          }}
+                          />
+                        </div>
+                      </div>
+                    }
+                    {currentType === "qna" &&
+                      <>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-gray-500 font-semibold text-sm">QUESTION</label>
+                          <Select {...register(`guidedPrompts.${i}.content.question`)} className="rounded-lg bg-white">
+                            <Select.Option value="What steps should I take to buy a property">What steps should I take to buy a property</Select.Option>
+                          </Select>
+                        </div>
+                        <div className="flex flex-col gap-1 mt-2">
+                          <label className="text-gray-400 font-semibold text-xs">ANSWER</label>
+                          <Textarea
+                            size="lg"
+                            disabled
+                            className="rounded-lg bg-white p-2 disabled:text-gray-400 text-sm"
+                            value="Ex. Alternatively, I can help with property-related inquiries or connect yout to a sales rep if you need further assistance. You can get started by selecting one of the following topics that best describes your need."
+                          />
+                        </div>
+                      </>
+                    }
+                    {currentType === "dynamic" &&
+                      <div className="flex flex-col gap-1 mt-2">
+                        <label className="text-gray-400 font-semibold text-xs">DYNAMIC FAQ</label>
+                        <Textarea
+                          size="lg"
+                          disabled
+                          className="rounded-lg bg-white p-2 disabled:text-gray-400 text-sm"
+                          value="FAQ will be provided by system"
+                        />
+                      </div>
+                    }
+                  </ContentContainer>
+                )
+              })}
+              
               <hr />
               <div className="">
                 <Button
                   variant="outline"
                   className="rounded-xl border-gray-300"
                   startIcon={<IoAdd className="border-2 rounded border-black w-5 h-5" />}
+                  onClick={() => {
+                    append(defaultPrompt)
+                  }}
                 >
                   Add Guided Prompts
                 </Button>

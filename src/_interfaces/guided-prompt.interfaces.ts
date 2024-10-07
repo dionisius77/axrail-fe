@@ -12,7 +12,7 @@ export interface GuidedPromptPayloadI {
 
 export interface GuidedPromptI {
   type: "category" | "qna" | "dynamic";
-  content: GuideCategoryI | QnaPromptI | undefined;
+  content: GuideCategoryI | QnaPromptI | {};
 }
 
 export interface GuideCategoryI {
