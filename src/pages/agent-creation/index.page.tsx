@@ -13,38 +13,40 @@ const AgentCreationPage = () => {
   const { register, errors, control, watch, reset, handleSave } = useAgentCreation();
 
   return (
-    <form onSubmit={handleSave} className="px-8">
+    <form onSubmit={handleSave} className="xl:px-8 relative">
       <Breadcrumbs className="text-lg">
         <Breadcrumbs.Item className="text-gray-500" href="#">Bot Agents</Breadcrumbs.Item>
         <Breadcrumbs.Item className="text-gray-500" href="#">Agents</Breadcrumbs.Item>
         <Breadcrumbs.Item className="text-black" href="/agent-creation">Agent Creation</Breadcrumbs.Item>
       </Breadcrumbs>
-      <ContentContainer>
-        <div className="flex flex-row justify-between items-center py-4 px-2">
-          <h1 className="font-bold text-3xl">
-            Agent Setup
-          </h1>
-          <div className="flex flex-row gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              className="bg-white rounded-xl border-gray-300"
-              startIcon={<IoClose className="w-6 h-6" />}>
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className="bg-slate-800 hover:bg-slate-500 rounded-xl text-white"
-              startIcon={<IoCheckmark className="w-6 h-6 text-white" />}
-            >
-              Save Changes
-            </Button>
+      <div className="sticky max-md:top-0 z-50">
+        <ContentContainer>
+          <div className="flex flex-row justify-between items-center py-4 px-2 flex-wrap gap-5">
+            <h1 className="font-bold text-3xl">
+              Agent Setup
+            </h1>
+            <div className="flex flex-row gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                className="bg-white rounded-xl border-gray-300"
+                startIcon={<IoClose className="w-6 h-6" />}>
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="bg-slate-800 hover:bg-slate-500 rounded-xl text-white"
+                startIcon={<IoCheckmark className="w-6 h-6 text-white" />}
+              >
+                Save Changes
+              </Button>
+            </div>
           </div>
-        </div>
-      </ContentContainer>
-      <div className="grid grid-cols-6 gap-4 mt-6 items-start">
+        </ContentContainer>
+      </div>
+      <div className="grid grid-cols-1 xl:grid-cols-6 gap-4 mt-6 items-start">
         <StepperSection activeStep={activeStep} onStepChange={(step) => { setActiveStep(step) }} />
-        <div className="col-span-5">
+        <div className="xl:col-span-5">
           {activeStep === 0 && <ChooseServiceSection />}
           {activeStep === 1 && <ModifyContentSection />}
           {activeStep === 2 &&
