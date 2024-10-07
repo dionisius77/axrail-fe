@@ -1,4 +1,4 @@
-import { Control, FieldErrors, useForm, UseFormRegister, UseFormReset, UseFormWatch } from "react-hook-form";
+import { Control, FieldErrors, useForm, UseFormRegister, UseFormReset, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { GuidedPromptI, GuidedPromptPayloadI } from "_interfaces/guided-prompt.interfaces";
@@ -9,6 +9,7 @@ export interface AgentCreationFormControlI {
   control: Control<GuidedPromptPayloadI, any>;
   watch: UseFormWatch<GuidedPromptPayloadI>;
   reset: UseFormReset<GuidedPromptPayloadI>;
+  setValue: UseFormSetValue<GuidedPromptPayloadI>;
 }
 
 export interface AgentCreationOutput extends AgentCreationFormControlI {
@@ -32,6 +33,7 @@ const useAgentCreation = (): AgentCreationOutput => {
     control,
     watch,
     reset,
+    setValue,
   } = useForm<GuidedPromptPayloadI>({
     mode: "onChange",
     resolver: yupResolver(schema),
@@ -49,7 +51,7 @@ const useAgentCreation = (): AgentCreationOutput => {
 
   const handleSave = handleSubmit(save);
 
-  return { register, errors, control, watch, reset, handleSave }
+  return { register, errors, control, watch, reset, setValue, handleSave }
 }
 
 export default useAgentCreation;

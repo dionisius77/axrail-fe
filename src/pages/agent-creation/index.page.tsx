@@ -10,7 +10,7 @@ import useAgentCreation from "hooks/useAgentCreation";
 
 const AgentCreationPage = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const { register, errors, control, watch, reset, handleSave } = useAgentCreation();
+  const { register, errors, control, watch, reset, handleSave, setValue } = useAgentCreation();
 
   return (
     <form onSubmit={handleSave} className="xl:px-8 relative">
@@ -56,6 +56,7 @@ const AgentCreationPage = () => {
               control={control}
               watch={watch}
               reset={reset}
+              setValue={setValue}
             />
           }
         </div>

@@ -1,7 +1,7 @@
 export interface GuidedPromptPayloadI {
   prompt: string;
   brandName: string;
-  logo: File;
+  logo?: FileList;
   welcomeMessage: string;
   hasRegisterButton: boolean;
   hasLoginButton: boolean;

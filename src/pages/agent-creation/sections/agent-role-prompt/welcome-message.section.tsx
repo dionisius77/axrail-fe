@@ -5,21 +5,24 @@ import Menu from "components/select/menu.component"
 import OptionComponent from "components/select/option.component"
 import { PromptCategoryOption } from "data/prompt-category"
 import { AgentCreationFormControlI, defaultPrompt } from "hooks/useAgentCreation"
+import useFilePreview from "hooks/useFilePreview"
 import { useState } from "react"
 import { Textarea, Dropdown, Card, Button, Select } from "react-daisyui"
 import { Controller, useFieldArray } from "react-hook-form"
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa"
 import { FiUpload } from "react-icons/fi"
-import { IoAdd, IoCloudUpload, IoInformationCircleOutline } from "react-icons/io5"
+import { IoAdd, IoClose, IoCloudUpload, IoInformationCircleOutline } from "react-icons/io5"
 import ReactSelect from "react-select";
 
-const WelcomeMessageSection = ({ register, errors, control, watch, reset }: AgentCreationFormControlI) => {
+const WelcomeMessageSection = ({ register, errors, control, watch, reset, setValue }: AgentCreationFormControlI) => {
   const [showGuidedPrompt, setShowGuidedPrompt] = useState(true);
   const [platformType, setPlatformType] = useState(0);
   const { fields, remove, append, update } = useFieldArray({
     control,
     name: "guidedPrompts",
   });
+  const logo = watch("logo");
+  const [logoPreview] = useFilePreview(logo);
 
   return (
     <ContentContainer>
@@ -36,12 +39,29 @@ const WelcomeMessageSection = ({ register, errors, control, watch, reset }: Agen
         <div className="flex flex-col gap-1">
           <label className="text-gray-500 font-semibold text-sm">UPLOAD LOGO</label>
           <div className="w-full rounded-lg border border-dashed border-blue-400 bg-white flex flex-col items-center justify-center gap-4 p-10">
-            <div className="rounded-full bg-blue-100 p-2">
-              <IoCloudUpload className="h-5 w-5 text-blue-500" />
-            </div>
-            <label htmlFor="fileupload" className="cursor-pointer text-blue-500 underline font-semibold">Browse Your File Here</label>
-            <input type="file" id="fileupload" className="hidden" accept="image/*" />
-            <p className="text-gray-500 text-sm text-center">Supported Format: JPEG, PNG Maximum file size: <span className="font-bold">2 MB</span></p>
+            {logoPreview ?
+              <>
+                <img src={logoPreview} />
+                <div
+                  className="cursor-pointer text-xs inline-flex items-center"
+                  onClick={() => {
+                    setValue("logo", undefined);
+                  }}
+                >
+                  <IoClose className="h-6 w-6" />
+                  Change Image
+                </div>
+              </>
+              :
+              <>
+                <div className="rounded-full bg-blue-100 p-2">
+                  <IoCloudUpload className="h-5 w-5 text-blue-500" />
+                </div>
+                <label htmlFor="fileupload" className="cursor-pointer text-blue-500 underline font-semibold">Browse Your File Here</label>
+                <input {...register("logo")} type="file" id="fileupload" className="hidden" accept="image/*" />
+                <p className="text-gray-500 text-sm text-center">Supported Format: JPEG, PNG Maximum file size: <span className="font-bold">2 MB</span></p>
+              </>
+            }
           </div>
         </div>
         <div className="mt-4 flex flex-col gap-1">

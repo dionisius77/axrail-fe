@@ -9,7 +9,7 @@ import FaqEnquiriesSection from "./faq-enquiries.section";
 import ProductEnquiriesSection from "./product-enquiries.section";
 import { AgentCreationFormControlI } from "hooks/useAgentCreation";
 
-const AgentRolePromptSection = ({ register, errors, control, watch, reset }: AgentCreationFormControlI) => {
+const AgentRolePromptSection = ({ register, errors, control, watch, reset, setValue }: AgentCreationFormControlI) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -46,6 +46,7 @@ const AgentRolePromptSection = ({ register, errors, control, watch, reset }: Age
           control={control}
           watch={watch}
           reset={reset}
+          setValue={setValue}
         />
       }
       {activeTab === 1 && <RecordNotFoundMessageSection />}
