@@ -25,7 +25,7 @@ const StepperSection = ({ onStepChange, activeStep }: StepProps) => {
         <div className="p-2.5">
           <div className="grid grid-cols-6 gap-2 items-start justify-stretch">
             <div className="flex flex-col items-center justify-center h-full">
-              <Checkbox id="step0" checked={activeStep >= 0} onChange={() => { onStepChange(0) }} />
+              <Checkbox className="rounded-lg" id="step0" checked={activeStep >= 0} onChange={() => { onStepChange(0) }} />
               <div className="bg-gray-300 h-full w-0.5 flex-grow flex-1 col-span-5" />
             </div>
             <label htmlFor="step0" className="col-span-5">
@@ -46,7 +46,7 @@ const StepperSection = ({ onStepChange, activeStep }: StepProps) => {
           </div>
           <div className="grid grid-cols-6 gap-2 items-start justify-stretch">
             <div className="flex flex-col items-center justify-center h-full">
-              <Checkbox id="step1" checked={activeStep >= 1 } onChange={() => { onStepChange(1) }} />
+              <Checkbox className="rounded-lg" id="step1" checked={activeStep >= 1 } onChange={() => { onStepChange(1) }} />
               <div className="bg-gray-300 h-full w-0.5 flex-grow flex-1 col-span-5" />
             </div>
             <label htmlFor="step1" className="col-span-5">
@@ -65,7 +65,7 @@ const StepperSection = ({ onStepChange, activeStep }: StepProps) => {
           </div>
           <div className="grid grid-cols-6 gap-2 items-start justify-stretch">
             <div className="flex flex-col items-center justify-start h-full">
-              <Checkbox id="step2" checked={activeStep === 2} onChange={() => { onStepChange(2) }} />
+              <Checkbox className="rounded-lg" id="step2" checked={activeStep === 2} onChange={() => { onStepChange(2) }} />
             </div>
             <label htmlFor="step2" className="col-span-5">
               <p className="underline text-blue-600 text-xs">STEP 3:</p>

@@ -44,9 +44,11 @@ const AgentCreationPage = () => {
           </div>
         </ContentContainer>
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-6 gap-4 mt-6 items-start">
-        <StepperSection activeStep={activeStep} onStepChange={(step) => { setActiveStep(step) }} />
-        <div className="xl:col-span-5">
+      <div className="grid grid-cols-1 lg:grid-cols-7 xl:grid-cols-6 gap-4 mt-6 items-start">
+        <div className="lg:col-span-2 xl:col-span-1">
+          <StepperSection activeStep={activeStep} onStepChange={(step) => { setActiveStep(step) }} />
+        </div>
+        <div className="lg:col-span-5">
           {activeStep === 0 && <ChooseServiceSection />}
           {activeStep === 1 && <ModifyContentSection />}
           {activeStep === 2 &&

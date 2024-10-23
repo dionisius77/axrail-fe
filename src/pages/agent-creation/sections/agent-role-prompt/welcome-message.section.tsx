@@ -152,7 +152,7 @@ const WelcomeMessageSection = ({ register, errors, control, watch, reset, setVal
                         <FaTrashAlt />
                       </Button>
                     </div>
-                    <div className="flex flex-col xl:flex-row gap-4 my-2">
+                    <div className="flex flex-col lg:flex-row gap-4 my-2">
                       <div className="flex flex-row gap-2">
                         <input value="category" {...register(`guidedPrompts.${i}.type`)} id={`categoryRadio${i}`} type="radio" />
                         <label className="cursor-pointer font-medium" htmlFor={`categoryRadio${i}`}>Category</label>

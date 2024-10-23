@@ -20,8 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ active, toggleSidebar }): JSX.Element
 
   return (
     <aside
-      className={`z-[999] max-h-screen h-screen overflow-auto top-0 bg-white transition-all duration-500 shadow-xl ${active ? "max-lg:fixed w-[80%] xl:w-[20%]" : "block -left-[20%] w-[0%]"
-        }`}
+      className={`z-[999] max-h-screen h-screen overflow-auto top-0 bg-white transition-all duration-500 shadow-xl ${active ? "max-xl:fixed w-[80%] lg:w-[30%] xl:w-[20%]" : "block -left-[20%] w-[0%]"}`}
     >
       <div className="pl-4 pr-2">
         <div className="w-full flex-row flex justify-between items-center gap-2 py-4">
@@ -60,8 +59,10 @@ const Sidebar: React.FC<SidebarProps> = ({ active, toggleSidebar }): JSX.Element
                   }}
                 >
                   {({ isActive }) => {
+                    const childExpanded = item.child?.find(found => found.expand);
+                    const active = item.child ? childExpanded : isActive;
                     return (
-                      <li className={`${isActive && item.path !== "#" ? "!bg-blue-50" : "bg-white"} hover:bg-spix hover:bg-opacity-20 transition-all duration-100 p-4 cursor-pointer ml-2 rounded-lg flex flex-row gap-4 items-center`}>
+                      <li className={`${(item.child && item.expand) || (isActive && !item.child) ? "!bg-blue-50" : "bg-white"} hover:bg-spix hover:bg-opacity-20 transition-all duration-100 p-4 cursor-pointer ml-2 rounded-lg flex flex-row gap-4 items-center`}>
                         {item.icon}{item.name}
                         {item.child && <FaMinus className="ml-auto" />}
                       </li>
@@ -87,13 +88,15 @@ const Sidebar: React.FC<SidebarProps> = ({ active, toggleSidebar }): JSX.Element
                               }
                             }}
                           >
-                            {({ isActive }) => (
-                              <li className="py-1.5 border-b">
-                                <div className={`${isActive && child.path !== "#" ? "!bg-blue-50" : "bg-white"} hover:bg-spix hover:bg-opacity-20 transition-all duration-100 p-3 cursor-pointer rounded-lg`}>
-                                  {child.name}
-                                </div>
-                              </li>
-                            )}
+                            {({ isActive }) => {
+                              return (
+                                <li className="py-1.5 border-b">
+                                  <div className={`${isActive || child.expand ? "!bg-blue-50 text-blue-700" : "bg-white"} hover:bg-spix hover:bg-opacity-20 transition-all duration-100 p-3 cursor-pointer rounded-lg`}>
+                                    {child.name}
+                                  </div>
+                                </li>
+                              )
+                            }}
                           </NavLink>
                           {child.expand && (
                             <ul className="whitespace-nowrap ml-10">
@@ -104,7 +107,7 @@ const Sidebar: React.FC<SidebarProps> = ({ active, toggleSidebar }): JSX.Element
                                 >
                                   {({ isActive }) => (
                                     <li className="py-1.5 border-b">
-                                      <div className={`${isActive ? "!bg-blue-50" : "bg-white"} hover:bg-spix hover:bg-opacity-20 transition-all duration-100 p-3 cursor-pointer rounded-lg`}>
+                                      <div className={`${isActive ? "!bg-blue-50 text-blue-700" : "bg-white"} hover:bg-spix hover:bg-opacity-20 transition-all duration-100 p-3 cursor-pointer rounded-lg`}>
                                         {subChild.name}
                                       </div>
                                     </li>
