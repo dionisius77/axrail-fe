@@ -29,7 +29,7 @@ const CInputInner = (
       <Input
         {...props}
         ref={ref}
-        className={`w-full ${props?.error ? "!border-red-400" : ""} bg-white`}
+        className={`w-full ${props?.error ? "!border-red-400" : ""} bg-white rounded-lg`}
       />
       <ValidationError error={props?.error} />
     </div>

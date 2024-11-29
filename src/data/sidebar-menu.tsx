@@ -11,6 +11,7 @@ interface MenuItem {
   icon?: JSX.Element;
   child?: MenuItem[];
   expand?: boolean;
+  active?: boolean;
 }
 
 const menuItems: MenuItem[] = [
